@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Motorcycle Search</title>
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500&display=swap" rel="stylesheet">
+</head>
+<body>
+    <header>
+        <h1>Motorcycle Explorer</h1>
+        <p>Discover and compare motorcycles from top manufacturers.</p>
+    </header>
+
+    <section class="search-container">
+        <h2>Search Criteria</h2>
+        <div class="search-fields">
+            <input type="text" id="search-input" placeholder="Search by name, manufacturer, or body type...">
+            <button onclick="filterMotorcycles()">Search</button>
+        </div>
+    </section>
+
+    <section id="results" class="results-grid">
+        <!-- Placeholder message -->
+        <p class="placeholder">Enter a search term to find motorcycles.</p>
+    </section>
+
+    <footer>
+        <p>&copy; 2023 Motorcycle Explorer. All rights reserved.</p>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+</html>
