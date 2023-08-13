@@ -10,6 +10,7 @@ const xmlData = `
         <vehicleEngine>649cc parallel twin</vehicleEngine>
         <manufacturer>Kawasaki</manufacturer>
         <weightTotal>419 lbs</weightTotal>
+        <image>ninja 650.jpg</image>
     </motorcycle1>
     <motorcycle2>
         <accelerationTime>5.8 sec 0...100mph</accelerationTime>
@@ -20,6 +21,7 @@ const xmlData = `
         <vehicleEngine>998cc Supercharged Inline 4</vehicleEngine>
         <manufacturer>Kawasaki</manufacturer>
         <weightTotal>524 lbs</weightTotal>
+        <image>ninja h2.jpg</image>
     </motorcycle2>
     <motorcycle3>
         <accelerationTime>5.1 sec 0...60mph</accelerationTime>
@@ -30,6 +32,7 @@ const xmlData = `
         <vehicleEngine>321cc inline twin</vehicleEngine>
         <manufacturer>Yamaha</manufacturer>
         <weightTotal>375 lbs</weightTotal>
+        <image>r3.jpg</image>
     </motorcycle3>
     <motorcycle4>
     <accelerationTime>5.4 sec 0…100mph</accelerationTime>
@@ -40,6 +43,7 @@ const xmlData = `
     <vehicleEngine>998cc inline 4</vehicleEngine>
     <manufacturer>Kawasaki</manufacturer>
     <weightTotal>452lbs</weightTotal>
+    <image>ninja zx-10r abs.jpg</image>
 </motorcycle4>
 <motorcycle5>
     <accelerationTime>5.27 sec 0…100mph</accelerationTime>
@@ -50,6 +54,7 @@ const xmlData = `
     <vehicleEngine>999cc inline 4</vehicleEngine>
     <manufacturer>BMW</manufacturer>
     <weightTotal>434lbs</weightTotal>
+    <image>s1000rr.jpg</image>
 </motorcycle5>
 <motorcycle6>
     <accelerationTime>6.36 sec 0…60</accelerationTime>
@@ -60,6 +65,7 @@ const xmlData = `
     <vehicleEngine>286cc single cylinder</vehicleEngine>
     <manufacturer>Honda</manufacturer>
     <weightTotal>357lbs</weightTotal>
+    <image>cbr 300r.jpg</image>
 </motorcycle6>
 <motorcycle7>
     <accelerationTime>3.8 sec 0…60</accelerationTime>
@@ -70,6 +76,7 @@ const xmlData = `
     <vehicleEngine>645cc V-twin</vehicleEngine>
     <manufacturer>Suzuki</manufacturer>
     <weightTotal>476lbs</weightTotal>
+    <image>vstrom650.jpg</image>
 </motorcycle7>
 <motorcycle8>
     <accelerationTime>4.86 sec 0…60</accelerationTime>
@@ -80,6 +87,7 @@ const xmlData = `
     <vehicleEngine>1746cc V-twin</vehicleEngine>
     <manufacturer>Harley Davidson</manufacturer>
     <weightTotal>820</weightTotal>
+    <image>road glide.jpg</image>
 </motorcycle8>
 <motorcycle9>
     <accelerationTime>9.4 sec 0…60mph</accelerationTime>
@@ -90,6 +98,7 @@ const xmlData = `
     <vehicleEngine>494cc V-twin</vehicleEngine>
     <manufacturer>Harley Davidson</manufacturer>
     <weightTotal>492lbs</weightTotal>
+    <image>street 500.jpg</image>
 </motorcycle9>
 <motorcycle10>
     <accelerationTime>7.3 sec 0…60mph</accelerationTime>
@@ -100,6 +109,7 @@ const xmlData = `
     <vehicleEngine>1312cc V-twin</vehicleEngine>
     <manufacturer>Honda</manufacturer>
     <weightTotal>663lbs</weightTotal>
+    <image>fury.jpg</image>
 </motorcycle10>
 </motorcycles>
 `.trim();
@@ -129,6 +139,7 @@ function filterMotorcycles() {
         const manufacturer = motorcycle.getElementsByTagName('manufacturer')[0].textContent.toLowerCase();
         const bodyType = motorcycle.getElementsByTagName('bodyType')[0].textContent.toLowerCase();
         const name = motorcycle.getElementsByTagName('name')[0].textContent.toLowerCase();
+        const imageName = motorcycle.getElementsByTagName('image')[0].textContent;
 
         // If the search term is empty or matches any of the attributes, display the motorcycle
         if (!searchTerm || manufacturer.includes(searchTerm) || bodyType.includes(searchTerm) || name.includes(searchTerm)) {
@@ -140,7 +151,7 @@ function filterMotorcycles() {
 
             resultsDiv.innerHTML += `
                 <div class="motorcycle">
-                <img src="path_to_default_image.jpg" alt="${name} image"> <!-- Placeholder for image -->
+                    <img src="Images/${imageName}" alt="${name} image">
                     <h3>${name.charAt(0).toUpperCase() + name.slice(1)}</h3>
                     <p><strong>Manufacturer:</strong> ${manufacturer.charAt(0).toUpperCase() + manufacturer.slice(1)}</p>
                     <p><strong>Body Type:</strong> ${bodyType.charAt(0).toUpperCase() + bodyType.slice(1)}</p>
@@ -160,5 +171,10 @@ function filterMotorcycles() {
     }
 }
 
-// Call the function initially to display all motorcycles
-filterMotorcycles();
+// Add the event listener for the form
+document.getElementById('searchForm').addEventListener('submit', function(event) {
+    event.preventDefault(); // Prevent the form from actually submitting and refreshing the page
+    filterMotorcycles();   // Call the search function
+});
+
+
