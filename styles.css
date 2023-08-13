@@ -131,3 +131,30 @@ header, .search-container, footer {
         padding: 15px;
     }
 }
+
+.carousel-container {
+    overflow-x: auto;
+    white-space: nowrap;
+    padding: 20px 0;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.carousel {
+    display: inline-flex;
+}
+
+.carousel img {
+    margin-right: 15px;
+    height: 100px; /* Adjust this value based on your preference */
+    width: auto;
+}
+
+/* Hide the scrollbar but allow scrolling */
+.carousel-container::-webkit-scrollbar {
+    display: none;
+}
+
+.carousel-container {
+    -ms-overflow-style: none;  /* IE and Edge */
+    scrollbar-width: none;  /* Firefox */
+}
