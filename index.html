@@ -1,42 +1,116 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Motorcycle Search</title>
-    <link rel="stylesheet" href="styles.css">
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500&display=swap" rel="stylesheet">
+    <!-- Bootstrap CSS -->
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
 </head>
+
 <body>
-    <header>
+    <header class="bg-dark text-white p-4">
         <h1>Motorcycle Explorer</h1>
         <p>Discover and compare motorcycles from top manufacturers.</p>
     </header>
-    <section class="carousel-container">
-        <div id="carousel" class="carousel">
-            <!-- Carousel items will be populated here -->
-        </div>
-    </section>
 
-    <section class="search-container">
+    <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+        <div class="container-fluid">
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#main_nav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="main_nav">
+                <ul class="navbar-nav">
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" data-bs-toggle="dropdown"> Motorcycles </a>
+                        <ul class="dropdown-menu">
+                            <li class="dropdown-submenu">
+                                <a class="dropdown-item dropdown-toggle" href="#">Begginer Friendly</a>
+                                <ul class="submenu dropdown-menu">
+                                    <li class="dropdown-submenu">
+                                        <a class="dropdown-item dropdown-toggle" href="#">Cruiser</a>
+                                        <ul class="submenu dropdown-menu">
+                                            <li><a class="dropdown-item" href="#" onclick="filterByBike('Street 500')">Street 500</a></li>
+                                        </ul>
+                                    </li>
+                                    <li class="dropdown-submenu">
+                                        <a class="dropdown-item dropdown-toggle" href="#">Sport</a>
+                                        <ul class="submenu dropdown-menu">
+                                            <li><a class="dropdown-item" href="#" onclick="filterByBike('R3')">R3</a></li>
+                                            <li><a class="dropdown-item" href="#" onclick="filterByBike('CBR 300R')">CBR 300R</a></li>
+                                        </ul>
+                                    </li>
+                                    <li class="dropdown-submenu">
+                                        <a class="dropdown-item dropdown-toggle" href="#">Chopper</a>
+                                        <ul class="submenu dropdown-menu">
+                                            <li><a class="dropdown-item" href="#" onclick="filterByBike('Fury')">Fury</a></li>
+                                        </ul>
+                                    </li>
+                                </ul>
+                            </li>
+                            <li class="dropdown-submenu">
+                                <a class="dropdown-item dropdown-toggle" href="#">Not Beginner Friendly</a>
+                                <ul class="submenu dropdown-menu">
+                                    <li class="dropdown-submenu">
+                                        <a class="dropdown-item dropdown-toggle" href="#">Super Sport</a>
+                                        <ul class="submenu dropdown-menu">
+                                            <li><a class="dropdown-item" href="#" onclick="filterByBike('S1000RR')">S1000RR</a></li>
+                                            <li><a class="dropdown-item" href="#" onclick="filterByBike('Ninja ZX-10R ABS')">ZX-10R</a></li>
+                                        </ul>
+                                    </li>
+                                    <li class="dropdown-submenu">
+                                        <a class="dropdown-item dropdown-toggle" href="#">Hyper Sport</a>
+                                        <ul class="submenu dropdown-menu">
+                                            <li><a class="dropdown-item" href="#" onclick="filterByBike('Ninja H2')">H2</a></li>
+                                        </ul>
+                                    </li>
+                                    <li class="dropdown-submenu">
+                                        <a class="dropdown-item dropdown-toggle" href="#">Touring</a>
+                                        <ul class="submenu dropdown-menu">
+                                            <li><a class="dropdown-item" href="#" onclick="filterByBike('Road Glide')">Road Glide</a></li>
+                                        </ul>
+                                    </li>
+                                    <li class="dropdown-submenu">
+                                        <a class="dropdown-item dropdown-toggle" href="#">Sport</a>
+                                        <ul class="submenu dropdown-menu">
+                                            <li><a class="dropdown-item" href="#" onclick="filterByBike('Ninja 650')">Ninja 650</a></li>
+                                        </ul>
+                                    </li>
+                                </ul>
+                            </li>
+                        </ul>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <section class="search-container p-4">
         <h2>Search Criteria</h2>
-        <div class="search-fields">
-            <form id="searchForm" class="search-fields">
-                <input type="text" id="search-input" placeholder="Search by name, manufacturer, or body type...">
-                <button type="submit">Search</button>
-            </form>
-        </div>
+        <form id="searchForm" class="form-inline">
+            <input class="form-control mr-sm-2" type="text" id="search-input" placeholder="Search by name, manufacturer, or body type...">
+            <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+        </form>
     </section>
 
-    <section id="results" class="results-grid">
-        <!-- Placeholder message -->
-        <p class="placeholder">Enter a search term to find motorcycles.</p>
+    <section id="results" class="results-grid p-4">
+        <!-- Results will be populated here -->
     </section>
 
-    <footer>
+    <footer class="bg-dark text-white p-4 mt-auto">
         <p>&copy; 2023 Motorcycle Explorer. All rights reserved.</p>
     </footer>
 
+    <!-- Bootstrap JS, Popper.js, and jQuery -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/js/bootstrap.bundle.min.js"></script>
+
     <script src="script.js"></script>
 </body>
+
 </html>
