@@ -10,7 +10,6 @@ body {
     display: flex;
     flex-direction: column;
     align-items: center;
-    justify-content: space-between; /* This will push the footer to the bottom */
     min-height: 100vh; /* Full viewport height */
     margin: 0;
     padding: 0;
@@ -103,6 +102,8 @@ button:hover {
 }
 
 footer {
+    position: relative;
+    bottom: 0;
     width: 100%;
     max-width: 1200px;
     padding: 20px;
@@ -139,22 +140,42 @@ header, .search-container, footer {
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
 
-.carousel {
-    display: inline-flex;
+/* ============ desktop view ============ */
+@media all and (min-width: 992px) {
+    .dropdown-menu li {
+        position: relative;
+    }
+
+    .nav-item .submenu {
+        display: none;
+        position: absolute;
+        left: 100%;
+        top: -7px;
+    }
+
+    .nav-item .submenu-left {
+        right: 100%;
+        left: auto;
+    }
+
+    .dropdown-menu > li:hover {
+        background-color: #f1f1f1
+    }
+
+    .dropdown-menu > li:hover > .submenu {
+        display: block;
+    }
 }
 
-.carousel img {
-    margin-right: 15px;
-    height: 100px; /* Adjust this value based on your preference */
-    width: auto;
+/* ============ desktop view .end// ============ */
+
+/* ============ small devices ============ */
+@media (max-width: 991px) {
+    .dropdown-menu .dropdown-menu {
+        margin-left: 0.7rem;
+        margin-right: 0.7rem;
+        margin-bottom: .5rem;
+    }
 }
 
-/* Hide the scrollbar but allow scrolling */
-.carousel-container::-webkit-scrollbar {
-    display: none;
-}
-
-.carousel-container {
-    -ms-overflow-style: none;  /* IE and Edge */
-    scrollbar-width: none;  /* Firefox */
-}
+/* ============ small devices .end// ============ */
