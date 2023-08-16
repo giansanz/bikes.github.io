@@ -144,42 +144,105 @@ const xmlData = `
 const parser = new DOMParser();
 const xmlDoc = parser.parseFromString(xmlData, "text/xml");
 
-function filterMotorcycles() {
-const searchTerm = document.getElementById('search-input').value.toLowerCase().trim();
-const resultsDiv = document.getElementById('results');
-resultsDiv.innerHTML = ''; // Clear previous results
+function filterMotorcyclesBySearch() {
+    const searchTerm = document.getElementById('search-input').value.toLowerCase().trim();
+    const resultsDiv = document.getElementById('results');
+    resultsDiv.innerHTML = ''; // Clear previous results
 
-if (!searchTerm) {
-return; // Exit the function if the search term is empty
+    const motorcyclesElement = xmlDoc.getElementsByTagName('motorcycles')[0];
+    if (!motorcyclesElement) {
+        console.error("The 'motorcycles' element is not found in the XML data.");
+        return;
+    }
+    const motorcycles = motorcyclesElement.children;
+
+    for (let i = 0; i < motorcycles.length; i++) {
+        const motorcycle = motorcycles[i];
+        const manufacturer = motorcycle.getElementsByTagName('manufacturer')[0].textContent.toLowerCase();
+        const bodyType = motorcycle.getElementsByTagName('bodyType')[0].textContent.toLowerCase();
+        const name = motorcycle.getElementsByTagName('name')[0].textContent.toLowerCase();
+
+        if (manufacturer.includes(searchTerm) || bodyType.includes(searchTerm) || name.includes(searchTerm)) {
+            displayMotorcycle(motorcycle, resultsDiv);
+        }
+    }
+
+    if (!resultsDiv.innerHTML) {
+        resultsDiv.innerHTML = '<p>No motorcycles found based on the search term.</p>';
+    }
 }
 
-const motorcyclesElement = xmlDoc.getElementsByTagName('motorcycles')[0];
-if (!motorcyclesElement) {
-console.error("The 'motorcycles' element is not found in the XML data.");
-return;
+function filterByBike(bikeName) {
+    const resultsDiv = document.getElementById('results');
+    resultsDiv.innerHTML = ''; // Clear previous results
+
+    const motorcyclesElement = xmlDoc.getElementsByTagName('motorcycles')[0];
+    if (!motorcyclesElement) {
+        console.error("The 'motorcycles' element is not found in the XML data.");
+        return;
+    }
+    const motorcycles = motorcyclesElement.children;
+
+    for (let i = 0; i < motorcycles.length; i++) {
+        const motorcycle = motorcycles[i];
+        const name = motorcycle.getElementsByTagName('name')[0].textContent.toLowerCase();
+
+        // If the bike name matches the clicked bike name, display the motorcycle
+        if (name === bikeName.toLowerCase()) {
+            const manufacturer = motorcycle.getElementsByTagName('manufacturer')[0].textContent;
+            const bodyType = motorcycle.getElementsByTagName('bodyType')[0].textContent;
+            const speed = motorcycle.getElementsByTagName('speed')[0].textContent;
+            const accelerationTime = motorcycle.getElementsByTagName('accelerationTime')[0].textContent;
+            const fuelCapacity = motorcycle.getElementsByTagName('fuelCapacity')[0].textContent;
+            const vehicleEngine = motorcycle.getElementsByTagName('vehicleEngine')[0].textContent;
+            const weightTotal = motorcycle.getElementsByTagName('weightTotal')[0].textContent;
+            const image = motorcycle.getElementsByTagName('image')[0].textContent;
+
+            resultsDiv.innerHTML += `
+                <div class="motorcycle">
+                    <img src="Images/${image}" alt="${name} image">
+                    <h3>${name.charAt(0).toUpperCase() + name.slice(1)}</h3>
+                    <p><strong>Manufacturer:</strong> ${manufacturer}</p>
+                    <p><strong>Body Type:</strong> ${bodyType}</p>
+                    <p><strong>Speed:</strong> ${speed}</p>
+                    <p><strong>Acceleration:</strong> ${accelerationTime}</p>
+                    <p><strong>Fuel Capacity:</strong> ${fuelCapacity}</p>
+                    <p><strong>Engine:</strong> ${vehicleEngine}</p>
+                    <p><strong>Weight:</strong> ${weightTotal}</p>
+                </div>
+            `;
+        }
+    }
+
+    // Display a message if no results are found
+    if (!resultsDiv.innerHTML) {
+        resultsDiv.innerHTML = '<p>No motorcycles found based on the selection.</p>';
+    }
 }
-const motorcycles = motorcyclesElement.children;
 
-for (let i = 0; i < motorcycles.length; i++) {
-const motorcycle = motorcycles[i];
-const manufacturer = motorcycle.getElementsByTagName('manufacturer')[0].textContent.toLowerCase();
-const bodyType = motorcycle.getElementsByTagName('bodyType')[0].textContent.toLowerCase();
-const name = motorcycle.getElementsByTagName('name')[0].textContent.toLowerCase();
-const image = motorcycle.getElementsByTagName('image')[0].textContent;
+// Add the event listener for the form
+document.getElementById('searchForm').addEventListener('submit', function(event) {
+    event.preventDefault(); // Prevent the form from actually submitting and refreshing the page
+    filterMotorcycles();   // Call the search function
+});
 
-if (manufacturer.includes(searchTerm) || bodyType.includes(searchTerm) || name.includes(searchTerm)) {
+function displayMotorcycle(motorcycle, resultsDiv) {
+    const name = motorcycle.getElementsByTagName('name')[0].textContent;
+    const manufacturer = motorcycle.getElementsByTagName('manufacturer')[0].textContent;
+    const bodyType = motorcycle.getElementsByTagName('bodyType')[0].textContent;
     const speed = motorcycle.getElementsByTagName('speed')[0].textContent;
     const accelerationTime = motorcycle.getElementsByTagName('accelerationTime')[0].textContent;
     const fuelCapacity = motorcycle.getElementsByTagName('fuelCapacity')[0].textContent;
     const vehicleEngine = motorcycle.getElementsByTagName('vehicleEngine')[0].textContent;
     const weightTotal = motorcycle.getElementsByTagName('weightTotal')[0].textContent;
+    const image = motorcycle.getElementsByTagName('image')[0].textContent;
 
     resultsDiv.innerHTML += `
         <div class="motorcycle">
             <img src="Images/${image}" alt="${name} image">
-            <h3>${name.charAt(0).toUpperCase() + name.slice(1)}</h3>
-            <p><strong>Manufacturer:</strong> ${manufacturer.charAt(0).toUpperCase() + manufacturer.slice(1)}</p>
-            <p><strong>Body Type:</strong> ${bodyType.charAt(0).toUpperCase() + bodyType.slice(1)}</p>
+            <h3>${name}</h3>
+            <p><strong>Manufacturer:</strong> ${manufacturer}</p>
+            <p><strong>Body Type:</strong> ${bodyType}</p>
             <p><strong>Speed:</strong> ${speed}</p>
             <p><strong>Acceleration:</strong> ${accelerationTime}</p>
             <p><strong>Fuel Capacity:</strong> ${fuelCapacity}</p>
@@ -188,37 +251,39 @@ if (manufacturer.includes(searchTerm) || bodyType.includes(searchTerm) || name.i
         </div>
     `;
 }
-}
 
-if (!resultsDiv.innerHTML) {
-resultsDiv.innerHTML = '<p>No motorcycles found based on the search term.</p>';
-}
-}
-
-function populateCarousel() {
-const carouselDiv = document.getElementById('carousel');
-const brands = xmlDoc.getElementsByTagName('brand');
-
-for (let i = 0; i < brands.length; i++) {
-const brand = brands[i];
-const brandName = brand.getElementsByTagName('name')[0].textContent;
-const brandImage = brand.getElementsByTagName('image')[0].textContent;
-
-carouselDiv.innerHTML += `
-    <div class="carousel-item">
-        <img src="brands/${brandImage}" alt="${brandName} logo">
-    </div>
-`;
-}
-}
-
-// Call the function to populate the carousel
-populateCarousel();
-
-// Add the event listener for the form
+// Add the event listener for the search form
 document.getElementById('searchForm').addEventListener('submit', function(event) {
-event.preventDefault(); // Prevent the form from actually submitting and refreshing the page
-filterMotorcycles();   // Call the search function
+    event.preventDefault(); // Prevent the form from actually submitting and refreshing the page
+    filterMotorcyclesBySearch();   // Call the search function
 });
+document.addEventListener("DOMContentLoaded", function() {
+    // make it as accordion for smaller screens
+    if (window.innerWidth < 992) {
+        // close all inner dropdowns when parent is closed
+        document.querySelectorAll('.navbar .dropdown').forEach(function(everydropdown) {
+            everydropdown.addEventListener('hidden.bs.dropdown', function() {
+                // after dropdown is hidden, then find all submenus
+                this.querySelectorAll('.submenu').forEach(function(everysubmenu) {
+                    // hide every submenu as well
+                    everysubmenu.style.display = 'none';
+                });
+            });
+        });
 
-
+        document.querySelectorAll('.dropdown-menu a').forEach(function(element) {
+            element.addEventListener('click', function(e) {
+                let nextEl = this.nextElementSibling;
+                if (nextEl && nextEl.classList.contains('submenu')) {
+                    // prevent opening link if link needs to open dropdown
+                    e.preventDefault();
+                    if (nextEl.style.display == 'block') {
+                        nextEl.style.display = 'none';
+                    } else {
+                        nextEl.style.display = 'block';
+                    }
+                }
+            });
+        });
+    }
+});
